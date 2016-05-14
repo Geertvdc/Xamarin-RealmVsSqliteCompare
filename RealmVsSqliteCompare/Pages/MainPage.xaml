@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="RealmVsSqliteCompare.MainPage">
+	<ContentPage.Content>
+		<Grid Padding="5" BackgroundColor="#cccccc">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="20"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="50"/>
+				<RowDefinition Height="*"/>
+			</Grid.RowDefinitions>
+			<Button Grid.Row="1" Clicked="Insert1000OrdersButton_Clicked" Text="Insert 1000 Orders" HeightRequest="50" BackgroundColor="White"></Button>
+			<Button Grid.Row="2" Clicked="Query100OrdersButton_Clicked" Text="Query 100 orders" HeightRequest="50" BackgroundColor="White"></Button>
+			<Button Grid.Row="3" Clicked="Query1000OrderLinesButton_Clicked" Text="Query 1000 order lines" HeightRequest="80" BackgroundColor="White"></Button>
+			<Button Grid.Row="4" Clicked="Update100OrdersButton_Clicked" Text="Update 1000 orders" HeightRequest="80" BackgroundColor="White"></Button>
+
+			<Editor Grid.Row="8" x:Name="TimeResultsEditor"/>
+		</Grid>
+	</ContentPage.Content>
+</ContentPage>

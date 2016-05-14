@@ -1,30 +1,19 @@
 ﻿using System;
-
+using SQLite.Net.Async;
 using Xamarin.Forms;
 
 namespace RealmVsSqliteCompare
 {
 	public class App : Application
 	{
-		public App()
-		{
-			// The root page of your application
-			var content = new ContentPage
-			{
-				Title = "RealmVsSqliteCompare",
-				Content = new StackLayout
-				{
-					VerticalOptions = LayoutOptions.Center,
-					Children = {
-						new Label {
-							HorizontalTextAlignment = TextAlignment.Center,
-							Text = "Welcome to Xamarin Forms!"
-						}
-					}
-				}
-			};
+		SqlOrderRepository _sqlOrderRepository;
+		RealmOrderRepository _realmOrderRepository;
 
-			MainPage = new NavigationPage(content);
+		public App(SQLiteAsyncConnection sqlCon)
+		{
+			_sqlOrderRepository = new SqlOrderRepository(sqlCon);
+			_realmOrderRepository = new RealmOrderRepository();
+			MainPage = new MainPage(_sqlOrderRepository,_realmOrderRepository);
 		}
 
 		protected override void OnStart()

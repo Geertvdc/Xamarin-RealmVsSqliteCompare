@@ -22,7 +22,9 @@ namespace RealmVsSqliteCompare.Droid
 
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 
-			LoadApplication(new App());
+			var dbPath = FileAccessHelper.GetLocalFilePath("Order.db");
+
+			LoadApplication(new App(dbPath));
 		}
 	}
 }
