@@ -11,7 +11,6 @@ namespace RealmVsSqliteCompare
 		[PrimaryKey, AutoIncrement]
 		public int Id { get; set; }
 
-		[Indexed]
 		public string OrderNumber { get; set; }
 
 		public string Title { get; set; }
