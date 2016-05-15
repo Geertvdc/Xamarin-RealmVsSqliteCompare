@@ -26,7 +26,6 @@ namespace RealmVsSqliteCompare.Droid
 		
 		public static void UpdateIdValues()
 		{
-			global::Splat.Resource.String.library_name = global::RealmVsSqliteCompare.Droid.Resource.String.library_name;
 			global::Xamarin.Forms.Platform.Resource.Animation.abc_fade_in = global::RealmVsSqliteCompare.Droid.Resource.Animation.abc_fade_in;
 			global::Xamarin.Forms.Platform.Resource.Animation.abc_fade_out = global::RealmVsSqliteCompare.Droid.Resource.Animation.abc_fade_out;
 			global::Xamarin.Forms.Platform.Resource.Animation.abc_grow_fade_in_from_bottom = global::RealmVsSqliteCompare.Droid.Resource.Animation.abc_grow_fade_in_from_bottom;
@@ -1485,6 +1484,8 @@ namespace RealmVsSqliteCompare.Droid
 			global::Xamarin.Forms.Platform.Resource.Styleable.ViewStubCompat_android_id = global::RealmVsSqliteCompare.Droid.Resource.Styleable.ViewStubCompat_android_id;
 			global::Xamarin.Forms.Platform.Resource.Styleable.ViewStubCompat_android_inflatedId = global::RealmVsSqliteCompare.Droid.Resource.Styleable.ViewStubCompat_android_inflatedId;
 			global::Xamarin.Forms.Platform.Resource.Styleable.ViewStubCompat_android_layout = global::RealmVsSqliteCompare.Droid.Resource.Styleable.ViewStubCompat_android_layout;
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.ApplicationName = global::RealmVsSqliteCompare.Droid.Resource.String.ApplicationName;
+			global::SQLite.Net.Platform.XamarinAndroid.Resource.String.Hello = global::RealmVsSqliteCompare.Droid.Resource.String.Hello;
 		}
 		
 		public partial class Animation
@@ -3985,9 +3986,6 @@ namespace RealmVsSqliteCompare.Droid
 			
 			// aapt resource value: 0x7f05000b
 			public const int appbar_scrolling_view_behavior = 2131034123;
-			
-			// aapt resource value: 0x7f050020
-			public const int library_name = 2131034144;
 			
 			// aapt resource value: 0x7f050000
 			public const int mr_media_route_button_content_description = 2131034112;

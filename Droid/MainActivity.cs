@@ -7,6 +7,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using SQLite.Net;
+using SQLite.Net.Async;
 
 namespace RealmVsSqliteCompare.Droid
 {
@@ -23,8 +25,10 @@ namespace RealmVsSqliteCompare.Droid
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 
 			var dbPath = FileAccessHelper.GetLocalFilePath("Order.db");
-
-			LoadApplication(new App(dbPath));
+			var platform = new SQLite.Net.Platform.XamarinAndroid.SQLitePlatformAndroid();
+			var param = new SQLiteConnectionString(dbPath, false);
+			var connection = new SQLiteAsyncConnection(() => new SQLiteConnectionWithLock(platform, param));
+			LoadApplication(new App(connection));
 		}
 	}
 }

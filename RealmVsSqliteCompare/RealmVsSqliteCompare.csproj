@@ -39,9 +39,10 @@
     <Compile Include="Services\RealmService.cs" />
     <Compile Include="Services\IDbService.cs" />
     <Compile Include="Repositories\SqlOrderRepository.cs" />
-    <Compile Include="Repositories\RealmOrderRepository.cs" />
     <Compile Include="Model\Sqlite\SqlOrder.cs" />
     <Compile Include="Model\Sqlite\SqlOrderLine.cs" />
+    <Compile Include="Model\Realm\RealmOrder.cs" />
+    <Compile Include="Model\Realm\RealmOrderLine.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -82,6 +83,7 @@
     <Folder Include="Services\" />
     <Folder Include="Repositories\" />
     <Folder Include="Model\Sqlite\" />
+    <Folder Include="Model\Realm\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Pages\MainPage.xaml">

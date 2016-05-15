@@ -7,13 +7,11 @@ namespace RealmVsSqliteCompare
 	public class App : Application
 	{
 		SqlOrderRepository _sqlOrderRepository;
-		RealmOrderRepository _realmOrderRepository;
 
 		public App(SQLiteAsyncConnection sqlCon)
 		{
 			_sqlOrderRepository = new SqlOrderRepository(sqlCon);
-			_realmOrderRepository = new RealmOrderRepository();
-			MainPage = new MainPage(_sqlOrderRepository,_realmOrderRepository);
+			MainPage = new MainPage(_sqlOrderRepository);
 		}
 
 		protected override void OnStart()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Realms;
 
 using Xamarin.Forms;
 
@@ -9,18 +10,19 @@ namespace RealmVsSqliteCompare
 	public partial class MainPage : ContentPage
 	{
 		SqlOrderRepository _sqlOrderRepository;
-		RealmOrderRepository _realmOrderRepository;
+		Realm _realm;
 
-		public MainPage(SqlOrderRepository sqlOrderRepository, RealmOrderRepository realmOrderRepository)
+		public MainPage(SqlOrderRepository sqlOrderRepository )
 		{
 			InitializeComponent();
 
 			_sqlOrderRepository = sqlOrderRepository;
-			_realmOrderRepository = realmOrderRepository;
+			_realm = Realm.GetInstance();
 		}
 
 		async void Insert1000OrdersButton_Clicked(object sender, System.EventArgs e)
 		{
+			//sqlite
 			List<SqlOrder> orders = new List<SqlOrder>();
 			for (int i = 0; i < 1000; i++)
 			{
@@ -38,6 +40,34 @@ namespace RealmVsSqliteCompare
 			watch.Stop();
 
 			TimeResultsEditor.Text += $"inserted 1000 records into Sqlite in {watch.ElapsedMilliseconds} milliseconds\n";
+
+
+			//realm
+
+			watch.Restart();
+
+			_realm.Write(() =>
+			{
+				for (int i = 0; i < 1000; i++)
+				{
+					var order = _realm.CreateObject<RealmOrder>();
+					order.OrderNumber = $"Order{i}";
+					order.Price = i;
+					order.Title = Title = $"title {i}";
+
+					for (int j = 0; j < 5; j++)
+					{
+						var orderLine = _realm.CreateObject<RealmOrderLine>();
+						orderLine.Order = order;
+						orderLine.Amount = j;
+						orderLine.UnitPrice = j;
+						orderLine.Product = $"Product {i}{j}";
+						order.OrderLines.Add(orderLine);
+					}
+				}
+			});
+			watch.Stop();
+			TimeResultsEditor.Text += $"REALM: inserted 1000 records into realm in {watch.ElapsedMilliseconds} milliseconds\n";
 		}
 
 		async void Query100OrdersButton_Clicked(object sender, System.EventArgs e)
