@@ -18,7 +18,7 @@
 			<Button Grid.Row="3" Clicked="Query1000OrderLinesButton_Clicked" Text="Query 1000 order lines" HeightRequest="80" BackgroundColor="White"></Button>
 			<Button Grid.Row="4" Clicked="Update100OrdersButton_Clicked" Text="Update 1000 orders" HeightRequest="80" BackgroundColor="White"></Button>
 
-			<Editor Grid.Row="8" x:Name="TimeResultsEditor"/>
+			<Editor Grid.Row="8" x:Name="TimeResultsEditor" FontSize="10"/>
 		</Grid>
 	</ContentPage.Content>
 </ContentPage>
