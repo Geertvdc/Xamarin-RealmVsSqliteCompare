@@ -6,6 +6,7 @@ using SQLite.Net;
 using SQLite.Net.Async;
 using SQLiteNetExtensionsAsync.Extensions;
 using System.Linq.Expressions;
+using SQLiteNetExtensions.Extensions;
 
 namespace RealmVsSqliteCompare
 {
@@ -32,8 +33,31 @@ namespace RealmVsSqliteCompare
 
 		public async Task InsertOrders(IEnumerable<SqlOrder> orders)
 		{
-			await sql.InsertAllWithChildrenAsync(orders);
+			//really slow easy way
+			//await sql.RunInTransactionAsync((SQLiteConnection conn) =>
+			//{
+			//	conn.InsertAllWithChildren(orders);
+			//});
 
+
+			//faster way
+			await sql.RunInTransactionAsync((SQLiteConnection conn) =>
+			{
+				conn.InsertAll(orders);
+
+				// map order id's to orderlines for FK
+				var lines = orders.SelectMany(o =>
+				{
+					foreach (SqlOrderLine l in o.OrderLines)
+					{
+						l.OrderId = o.Id;
+						l.Order = o;
+					}
+					return o.OrderLines;
+				});
+
+				conn.InsertAll(lines);
+			});
 		}
 
 		public async Task<SqlOrder> GetOrderById(int id)
