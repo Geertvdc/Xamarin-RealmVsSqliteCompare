@@ -79,7 +79,7 @@ namespace RealmVsSqliteCompare
 
 		public async Task UpdateRecord<T>(List<T> records) where T : class
 		{
-			var updated = await sql.UpdateAllAsync(records);
+			await sql.UpdateAllAsync(records);
 		}
 	}
 }
