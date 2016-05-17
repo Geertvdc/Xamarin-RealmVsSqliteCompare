@@ -44,7 +44,7 @@ namespace RealmVsSqliteCompare
 			await _sqlOrderRepository.InsertOrders(orders);
 			watch.Stop();
 
-			TimeResultsEditor.Text += $"inserted 1000 records into Sqlite in {watch.ElapsedMilliseconds} milliseconds\n";
+			TimeResultsEditor.Text += $"SQLITE: inserted 1000 records into Sqlite in {watch.ElapsedMilliseconds} milliseconds\n";
 
 
 			//realm
@@ -82,14 +82,14 @@ namespace RealmVsSqliteCompare
 			var orders = await _sqlOrderRepository.Query<SqlOrder>(o => o.Price >= 900);
 			watch.Stop();
 
-			TimeResultsEditor.Text += $"queried {orders.Count} orders from Sqlite in {watch.ElapsedMilliseconds} milliseconds\n";
+			TimeResultsEditor.Text += $"SQLITE: queried {orders.Count} orders from Sqlite in {watch.ElapsedMilliseconds} milliseconds\n";
 
 			//realm
 			watch.Restart();
 			var realmOrders = _realm.All<RealmOrder>().Where(o => o.Price >= 900).ToList();
 
 			watch.Stop();
-			TimeResultsEditor.Text += $"queried {realmOrders.Count} orders from Realm in {watch.ElapsedMilliseconds} milliseconds\n";
+			TimeResultsEditor.Text += $"REALM: queried {realmOrders.Count} orders from Realm in {watch.ElapsedMilliseconds} milliseconds\n";
 
 		}
 
@@ -99,7 +99,13 @@ namespace RealmVsSqliteCompare
 			var orderLines = await _sqlOrderRepository.Query<SqlOrderLine>(l => l.Amount == 2);
 			watch.Stop();
 
-			TimeResultsEditor.Text += $"queried {orderLines.Count} order lines from Sqlite in {watch.ElapsedMilliseconds} milliseconds\n";
+			TimeResultsEditor.Text += $"SQLITE: queried {orderLines.Count} order lines from Sqlite in {watch.ElapsedMilliseconds} milliseconds\n";
+
+			//Realm
+			watch.Restart();
+			var realmOrderLines = _realm.All<RealmOrderLine>().Where(l => l.Amount == 2).ToList();
+			watch.Stop();
+			TimeResultsEditor.Text += $"REALM: queried {realmOrderLines.Count} order lines from Realm in {watch.ElapsedMilliseconds} milliseconds\n";
 		}
 
 		async void Update100OrdersButton_Clicked(object sender, System.EventArgs e)
@@ -112,13 +118,30 @@ namespace RealmVsSqliteCompare
 			}
 			await _sqlOrderRepository.UpdateRecord<SqlOrder>(orders);
 			watch.Stop();
-			TimeResultsEditor.Text += $"Updated {orders.Count} orders in Sqlite in {watch.ElapsedMilliseconds} milliseconds\n";
-			watch.Reset();
-			watch.Start();
+			TimeResultsEditor.Text += $"SQLITE: Updated {orders.Count} orders in Sqlite in {watch.ElapsedMilliseconds} milliseconds\n";
+			watch.Restart();
 			var updatedOrders = await _sqlOrderRepository.Query<SqlOrder>(o => o.Price >= 10000);
 			watch.Stop();
 
-			TimeResultsEditor.Text += $"Queried updated {updatedOrders.Count} orders in Sqlite in {watch.ElapsedMilliseconds} milliseconds\n";
+			TimeResultsEditor.Text += $"SQLITE: Queried updated {updatedOrders.Count} orders in Sqlite in {watch.ElapsedMilliseconds} milliseconds\n";
+
+			//Realm
+			watch.Restart();
+
+			var realmOrders = _realm.All<RealmOrder>().Where(o => o.Price >= 900).ToList();
+			_realm.Write(() =>
+			{
+				foreach (RealmOrder order in realmOrders)
+				{
+					order.Price += 10000;
+				}
+			});
+			watch.Stop();
+			TimeResultsEditor.Text += $"REALM: Updated {realmOrders.Count} orders in Realm in {watch.ElapsedMilliseconds} milliseconds\n";
+			watch.Restart();
+			realmOrders = _realm.All<RealmOrder>().Where(o => o.Price >= 900).ToList();
+			watch.Stop();
+			TimeResultsEditor.Text += $"REALM: queried updated {realmOrders.Count} orders from Realm in {watch.ElapsedMilliseconds} milliseconds\n";
 		}
 
 	}
